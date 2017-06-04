@@ -24,8 +24,10 @@ then click compile
 4. Click on the drop down to the left of the run button. Click Edit Configurations...
 5. In the new window, click on the plus sign at the top left of the window and select "Application"
 6. A new application configuration should appear, enter the following details
+	```
 	Main class: com.example.TimeManipulation
 	Use classpath of module: assignment
+	```
 7. Click "OK"
 8. Click on the run button now runs the file
 
