@@ -14,11 +14,10 @@ public class TimeManipulationTest {
     public void addMinutesTest() throws Exception {
         String input1 = "9:13 AM";
         int input2 = 200;
-        String output;
         String expected = "12:33 PM";
         TimeManipulation t = new TimeManipulation();
-        output = t.addMinutes(input1, input2);
-        assertEquals(expected, output);
+        t.addMinutes(input1, input2);
+        assertEquals(expected, t.resultStr.toString());
     }
 
 

@@ -29,55 +29,11 @@ public class TimeManipulation {
     public static int resultingHours;
     public static int resultingMins;
     public static int meridiemFluctuationCount =0; // times to switch meridiem (am/pm) value
-
+    public static StringBuilder resultStr;
 
 
     public static void main(String[] args) {
-
-        if (!useCommandLine(args)){
-            String input1 ="9:13 AM";
-            int input2 = 200;
-            System.out.println(addMinutes(input1, input2));
-            return;
-        }
-
-        runCommandLine(args); // executes only if given values from command line
-    }
-
-    /**
-     * Prints the result of the method addMinutes when given
-     * values from the command line
-     *
-     * @param args string array that contains given time and minutes to added
-     *             1. args[0] contains time in 12-hr format
-     *             2. args[1] contains minutes as a string
-     */
-    private static void runCommandLine(String[] args) {
-        String input1 = args[0]; //sets the first argument
-        Integer input2;
-
-        try{
-            input2 = Integer.valueOf(args[1]); //sets the second argument
-        }catch (Exception ex){
-            System.out.println(invalidNumber);
-            return;
-        }
-
-        System.out.println(addMinutes(input1, input2));
-    }
-
-    /**
-     * Checks if the user has entered values via command line
-     *
-     * @param args string arguments entered by the user
-     * @return  false if the user has not entered any values,
-     *          true if otherwise
-     */
-    private static boolean useCommandLine(String[] args) {
-        if(args.length==0){
-            return false;
-        }
-        return true;
+        addMinutes("9:13 AM", 200);
     }
 
     /**
@@ -88,25 +44,30 @@ public class TimeManipulation {
      * @return  string representing the resulting time if time format is valid,
      *          string message if time format is invalid
      */
-    public static String addMinutes(String time, Integer minsAdded) {
+    public static void addMinutes(String time, Integer minsAdded) {
 
-        if(time==null || !validateTimeGiven(time)) return invalidFormat;  //  checks for invalid time format
+        if(time==null || !validateTimeGiven(time)){  //  checks for invalid time format
+            System.out.println(invalidFormat);
+            return ;
+        }
 
-        if(minsAdded==null) return invalidNumber;
+        if(minsAdded==null){
+            System.out.println(invalidNumber);
+            return ;
+        }
 
-        //Sets boolean value for adding or subtracting mins based on integer sign
+        //Sets boolean value for adding or subtracting minutes based on integer sign
         addGivenMins = minsAdded>0 ? true : false;
 
         meridiem = getMeridiem(time);
         String hour = getHour(time);
         String mins = getMins(time);
-        StringBuilder resultStr;
         if(addGivenMins){
              resultStr = addValues(minsAdded, hour, mins);
         }else{
              resultStr = minusValues(minsAdded, hour, mins);
         }
-        return resultStr.toString();
+        System.out.println(resultStr.toString());
     }
 
     /**
