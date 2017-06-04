@@ -33,7 +33,20 @@ public class TimeManipulation {
 
 
     public static void main(String[] args) {
+        System.out.print("Adding 200 minutes to 9:13 AM = ");
         addMinutes("9:13 AM", 200);
+
+        System.out.print("Adding 1630 minutes to 9:00 AM = ");
+        addMinutes("9:00 AM", 1630);
+
+        System.out.print("Adding -1 minutes to 9:00 AM = ");
+        addMinutes("9:00 AM", -1);
+
+        System.out.print("Adding -1270 minutes to 9:00 AM = ");
+        addMinutes("9:00 AM", -1270);
+
+        System.out.print("Adding -1630 minutes to 9:00 AM = ");
+        addMinutes("9:00 AM", -1630);
     }
 
     /**
@@ -222,11 +235,11 @@ public class TimeManipulation {
     /**
      * Gets the meridiem value (am/pm) based on the string value given
      *
-     * @param givenString "[H]H:MM {AM|PM}" formatted string
+     * @param time "[H]H:MM {AM|PM}" formatted string
      * @return string value of the meridiem found
      */
-    public static String getMeridiem(String givenString){
-        setRegexMatcher(givenString, "[A-Za-z]{2,2}");
+    public static String getMeridiem(String time){
+        setRegexMatcher(time, "[A-Za-z]{2,2}");
         while(regexMatch.find()){
             if(regexMatch.group().length() != 0){
                stringBuilder.append(regexMatch.group().trim().toLowerCase());
@@ -238,24 +251,24 @@ public class TimeManipulation {
     /**
      * Sets the proper regex to allow string search capability
      *
-     * @param givenString "[H]H:MM {AM|PM}" formatted string
+     * @param time "[H]H:MM {AM|PM}" formatted string
      * @param regex pattern to allow search for a part of the string
      * @return string value of the meridiem found
      */
-    public static void setRegexMatcher(String givenString, String regex) {
+    public static void setRegexMatcher(String time, String regex) {
         pattern = Pattern.compile(regex);
-        regexMatch = pattern.matcher(givenString);
+        regexMatch = pattern.matcher(time);
         stringBuilder = new StringBuilder();
     }
 
     /**
      * Gets the hour value based on the string value given
      *
-     * @param givenString "[H]H:MM {AM|PM}" formatted string
+     * @param time "[H]H:MM {AM|PM}" formatted string
      * @return string value of the hour found
      */
-    public static String getHour(String givenString){
-        setRegexMatcher(givenString, "^[^\\:]*");
+    public static String getHour(String time){
+        setRegexMatcher(time, "^[^\\:]*");
         while(regexMatch.find()){
             if(regexMatch.group().length() != 0){
                 stringBuilder.append(regexMatch.group().trim());
@@ -267,11 +280,11 @@ public class TimeManipulation {
     /**
      * Gets the mins value based on the string value given
      *
-     * @param givenString "[H]H:MM {AM|PM}" formatted string
+     * @param time "[H]H:MM {AM|PM}" formatted string
      * @return string value of the mins found
      */
-    public static String getMins(String givenString){
-        setRegexMatcher(givenString, ":(.+)[0-9]");
+    public static String getMins(String time){
+        setRegexMatcher(time, ":(.+)[0-9]");
         while(regexMatch.find()){
             if(regexMatch.group().length() != 0){
                 stringBuilder.append(regexMatch.group().trim().replace(":", ""));
