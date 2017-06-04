@@ -54,8 +54,6 @@ public class TimeManipulation {
      *
      * @param time the 12hr formatted string representing time
      * @param minsAdded signed integer value
-     * @return  string representing the resulting time if time format is valid,
-     *          string message if time format is invalid
      */
     public static void addMinutes(String time, Integer minsAdded) {
 
@@ -104,7 +102,7 @@ public class TimeManipulation {
     }
 
     /**
-     * Formats the new time time in accordance to  "[H]H:MM {AM|PM}"
+     * Formats the new time in accordance to  "[H]H:MM {AM|PM}"
      */
     public static void formatNewTime() {
         result = new StringBuilder();
@@ -253,7 +251,6 @@ public class TimeManipulation {
      *
      * @param time "[H]H:MM {AM|PM}" formatted string
      * @param regex pattern to allow search for a part of the string
-     * @return string value of the meridiem found
      */
     public static void setRegexMatcher(String time, String regex) {
         pattern = Pattern.compile(regex);
