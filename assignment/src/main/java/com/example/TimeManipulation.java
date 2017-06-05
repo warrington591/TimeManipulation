@@ -195,7 +195,7 @@ public class TimeManipulation {
 
     /**
      * Adjusts the meridiem (am/pm) value
-     * to reflex the new time. Function returns if
+     * to reflects the new time. Function returns if
      * the hour remains within the same 12-hr meridiem
      */
     public static void adjustMeridiem() {
@@ -217,9 +217,9 @@ public class TimeManipulation {
     }
 
     /**
-     * Switches the meridiem time
+     * Checks the meridiem time
      *
-     * * @return  true if hour is kept within the same
+     * @return  true if hour is kept within the same
      *            meridiem, false otherwise
      */
     private static boolean keepSameMeridiem() {
