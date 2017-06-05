@@ -27,8 +27,10 @@ public class TimeManipulation {
     public static int minsGiven;
     public static int resultingHours;
     public static int resultingMins;
-    public static int meridiemFluctuationCount =0; // times to switch meridiem (am/pm) value
+    public static int meridiemFluctuationCount; // times to switch meridiem (am/pm) value
     public static StringBuilder resultStr;
+    private static int hoursToDeduct;
+    private static int hoursToAdd;
 
 
     public static void main(String[] args) {
@@ -46,6 +48,12 @@ public class TimeManipulation {
 
         System.out.print("Adding -1630 minutes to 9:00 AM = ");
         addMinutes("9:00 AM", -1630);
+
+        System.out.print("Adding -1 to 12:00 PM = ");
+        addMinutes("12:00 PM", -1);
+
+        System.out.print("Adding 1 to 12:00 PM = ");
+        addMinutes("12:00 PM", 1);
     }
 
     /**
@@ -91,7 +99,7 @@ public class TimeManipulation {
     public static StringBuilder addValues(int minsToBeAdded, String hour, String minutes) {
         hoursGiven = Integer.valueOf(hour);
         minsGiven = Integer.valueOf(minutes);
-        int hoursToAdd = minsToBeAdded/60;
+        hoursToAdd = minsToBeAdded/60;
         int minsToAdd = minsToBeAdded%60;
 
         resultingHours = hoursGiven + hoursToAdd;
@@ -133,9 +141,10 @@ public class TimeManipulation {
      */
     public static StringBuilder minusValues(int minsSubtracted, String hour, String minutes) {
         minsSubtracted = Math.abs(minsSubtracted);
+        meridiemFluctuationCount = 0;
         hoursGiven = Integer.valueOf(hour);
         minsGiven = Integer.valueOf(minutes);
-        int hoursToDeduct = minsSubtracted/60;
+        hoursToDeduct = minsSubtracted/60;
         int minsToDeduct = minsSubtracted%60;
 
         if(minsToDeduct>minsGiven){
@@ -163,6 +172,8 @@ public class TimeManipulation {
             }else{
                 resultingHours = 12 - Math.abs(resultingHours);
             }
+        }else if(resultingHours>0 && resultingHours<12 && (hoursGiven < hoursToDeduct || hoursGiven==12)){
+            meridiemFluctuationCount = 1;
         }
     }
 
@@ -183,21 +194,38 @@ public class TimeManipulation {
 
     /**
      * Adjusts the meridiem (am/pm) value
-     * to reflex the new time
+     * to reflex the new time. Function returns if
+     * the hour remains within the same 12-hr meridiem
      */
     public static void adjustMeridiem() {
+        if (keepSameMeridiem()) return;
+
         if(resultingHours>=12 && meridiemFluctuationCount ==0){
             int value = resultingHours / 12;
             while(value!=0){
                 meridiem = setMeridiem(meridiem);
                 value--;
             }
-        }else{
+        }
+        else{
             while(meridiemFluctuationCount !=0){
                 meridiem = setMeridiem(meridiem);
                 meridiemFluctuationCount--;
             }
         }
+    }
+
+    /**
+     * Switches the meridiem time
+     *
+     * * @return  true if hour is kept within the same
+     *            meridiem, false otherwise
+     */
+    private static boolean keepSameMeridiem() {
+        if(hoursGiven==12 && hoursToAdd<12 && addGivenMins){
+            return true;
+        }
+        return false;
     }
 
 
